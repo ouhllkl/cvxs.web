@@ -11,5 +11,5 @@ google-auth==2.16.1
 google-auth-oauthlib==1.0.0
 social-auth-app-django==5.0.0
 social-auth-core==4.3.0
-whitenoise==6.3.0
+whitenoise
 
