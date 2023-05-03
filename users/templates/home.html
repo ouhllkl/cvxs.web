@@ -11,7 +11,7 @@
          {% if user.is_anonymous %}
             <button onclick="location.href='{% url 'login' %}'" class="btn btn-primary btn-lg active" style="width: 100%;">Login</button><br><br>
             <button onclick="location.href='{% url 'create_user_account' %}'"  class="btn btn-primary btn-lg active" style="width: 100%;">Signup</button><br><br>
-            <button class="btn btn-light btn-lg active" style="width: 100%;"><img src="{% url 'login_with_google' %}" style="width: 30px;" alt=""> Continue With Google</button>                 
+            <button class="btn btn-light btn-lg active" style="width: 100%;" onclick="location.href='{% url 'login_with_google' %}'"><img src="{% url 'login_with_google' %}" style="width: 30px;" alt=""> Continue With Google</button>                 
          {% else %}
          <button onclick="location.href='{% url 'view_universities' %}'" class="btn btn-primary btn-lg active" style="width: 100%;">Universities</button><br><br>
          <button onclick="location.href='{% url 'view_support_groups' %}'" class="btn btn-primary btn-lg active" style="width: 100%;"> Groups</button>                 

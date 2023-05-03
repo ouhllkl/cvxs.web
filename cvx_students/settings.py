@@ -150,19 +150,21 @@ EMAIL_HOST_PASSWORD = 'idghyaljbebssjgq'
 EMAIL_PORT = 587  
 
 
+AUTHENTICATION_BACKENDS = [    'django.contrib.auth.backends.ModelBackend',    'allauth.account.auth_backends.AuthenticationBackend',]
 
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'METHOD': 'oauth2',
+        'VERIFIED_EMAIL': False,
+        'SCOPE_SEPARATOR': ' ',
+        'CLIENT_ID': '<your-client-id>',
+        'SECRET': '<your-secret>',
     }
 }
+
 
 SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
