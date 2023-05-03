@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('users/', include('users.urls')),
     path('university/', include('universities.urls')),
+    path('login-with-google/', login_with_google, name='login_with_google'),
 
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

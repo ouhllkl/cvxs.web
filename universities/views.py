@@ -150,7 +150,7 @@ def add_scholarship_session(request, scholarship_id):
 def edit_scholarship_session(request, session_id):
     session = ScholarshipSession.objects.get(pk = session_id)
     check_1 = check_access_type_2(request, 'add_university')
-    print(check_1)
+    
     if not check_1['status']:
         return render(request, 'access_denied.html', check_1)
     

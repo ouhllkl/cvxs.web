@@ -30,15 +30,15 @@ def profile(request, user_id):
         
         if 'accept' in request.POST:
             user_obj.profile.cvx_acceptance = 1
-            notify_user(user_obj, 'CVX Application', 'Your application has been accepted by the CVX administration')
+            notify_user(request, user_obj, 'CVX Application Status Update', html_template='application_status', html_kwargs={'user_t': user_obj, 'status': 'Accepted'})
 
         if 'declines' in request.POST:
             user_obj.profile.cvx_acceptance = -1
-            notify_user(user_obj, 'CVX Application', 'Your application has been declines by the CVX administration')
+            notify_user(request, user_obj, 'CVX Application Status Update', html_template='application_status', html_kwargs={'user_t': user_obj, 'status': 'Denied'})
 
         if 'reviewing' in request.POST:
             user_obj.profile.cvx_acceptance = 0            
-            notify_user(user_obj, 'CVX Application', 'Your application has been returned to the reviewing status by the CVX administration')
+            notify_user(request, user_obj, 'CVX Application Status Update', html_template='application_status', html_kwargs={'user_t': user_obj, 'status': 'Under review'})
         
         
 
@@ -54,7 +54,8 @@ def profile(request, user_id):
             user_obj.profile.save()
 
 
-            notify_user(user_obj, 'CVX Procedures', 'Your procedures has been changeed to '+str(current_procedure))
+            
+            notify_user(request, user_obj, 'Update on Your Current Procedure in CVX Platform', html_template='Procedure_changed', html_kwargs={'user_t': user_obj, 'procedure': current_procedure})
 
 
         if 'start_procedure' in request.POST:
@@ -165,9 +166,12 @@ def view_support_group(request, group_id):
 
             if support_group_help_request.is_valid():
                 support_group_help_request.save()
-                notify_user(group.admin, 'Help request', f'You got a new help request in "{group}" support group')
+
+                notify_user(request, group.admin, 'Help request 1', html_template='help_request', html_kwargs={'user_t': group.admin, 'group': group})
+                
                 for member in SupportGourpUser.objects.filter(support_gourp = group):
-                    notify_user(member, 'Help request', f'You got a new help request in "{group}" support group')
+                    
+                    notify_user(request, member.user, 'Help request 2', html_template='help_request', html_kwargs={'user_t':member.user, 'group': group})
             
             else:
                 print(support_group_help_request.errors)
@@ -177,7 +181,8 @@ def view_support_group(request, group_id):
 
             if support_group_join_request.is_valid():
                 support_group_join_request.save()
-                notify_user(group.admin, 'Join request', f'You got a new join request in "{group}" support group')
+                notify_user(request, group.admin, 'Join request', html_template='join_request', html_kwargs={'user_t': group.admin, 'group': group})
+                
             
             else:
                 print(support_group_join_request.errors)
@@ -211,11 +216,13 @@ def view_join_requests(request, group_id):
         if 'accept' in request.POST:
             SupportGourpUser(support_gourp = group, user = user).save()
             join_request.delete()
-            notify_user(user, 'Join request', f'Your join request to "{group}" support group has been aproved')
+            notify_user(request, user, 'Join request', html_template='join_request_status', html_kwargs={'user_t':user, 'group': group, 'status': 'aproved'})
+            
         
         if 'cancel' in request.POST:
             join_request.delete()
-            notify_user(user, 'Join request', f'Your join request to "{group}" support group has been canceled')
+            notify_user(request, user, 'Join request', html_template='join_request_status', html_kwargs={'user_t':user, 'group': group, 'status': 'canceled'})
+            
 
 
     requests = SupportGroupJoinRequest.objects.filter(support_gourp = group)
@@ -242,6 +249,7 @@ def view_help_requests(request, group_id):
             join_request.helper = request.user
             join_request.save()
             notify_user(request, join_request.user, 'Help Request', html_template = 'one_will_help_1', html_kwargs = {'from': request.user, 'to': join_request.user, })
+
 
     requests = SupportGroupHelpRequest.objects.filter(support_gourp = group)
     return render(request, 'help_requests.html', {'group': group, 'requests': requests, 'group_id': group_id})
@@ -354,7 +362,8 @@ def edit_profile(request):
             profile_form.save()
             profile_p.save()
             for a_user in administration_profile.objects.filter(notify_for_new_applications = True):
-                notify_user(a_user.user, 'New application', 'There is a new application in cvx students')
+                notify_user(request, a_user.user, 'New application', html_template='new_application', html_kwargs={'user_t': a_user.user})
+                
             
             messages.success(request, 'we have recived your application.')
             return redirect('profile', request.user.pk)

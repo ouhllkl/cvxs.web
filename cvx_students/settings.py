@@ -25,8 +25,15 @@ SECRET_KEY = 'django-insecure-c3!6#x7t8!9ec5f_e0x5sp(4#srq7mie0b4!2v-$t^vccxo+&b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cvxsweb-production.up.railway.app']
+ALLOWED_HOSTS = ['cvxsweb-production.up.railway.app', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://cvxsweb-production.up.railway.app']
+
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '937492040758-pmc7ggqbhq487vd4kgnrmgfgckbt668u.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+
 
 
 # Application definition
