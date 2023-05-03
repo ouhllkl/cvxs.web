@@ -1,0 +1,17 @@
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    <img src="{% static 'images/group.png' %}" style="width: 100%;" alt="">
+    <h1>Groups</h1>
+    <br>
+    {% for group in groups %}
+        <div class="list_item">
+            <h2>{{ group }} </h2>
+            <p> ({{ group.supportgourpuser_set.all.count }} users)</p>
+            <br>
+            <a class="btn btn-dark" href="{% url 'view_support_group' group_id=group.pk %}">Open</a>
+        </div>
+    {% endfor %}
+{% endblock %}

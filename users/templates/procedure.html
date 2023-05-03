@@ -1,0 +1,26 @@
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    <h1> {{ procedure }}</h1>
+    <br>
+    <p>{{ procedure.about }}</p>
+    <br>
+
+    <h5>Steps</h5>
+    {% for step in procedure_steps %}
+
+        {% if step == user_obj.profile.current_procedure_step  %}
+            <input type="hidden" name="current_step" value="{{ step.pk }}">
+        {% endif %}
+        
+        
+        <button type="button" onclick="location.href='{% url 'view_step' step.pk %}'" style="margin-bottom: 10px;margin-top: 10px;" class="col-7 btn btn-{% if step.c_status == 1 or user_obj.profile.current_procedure_completed %}success{% elif step.c_status == 0 %}warning{% else %}dark{% endif %}">{{ step.step }}</button>
+        {% if step == user_obj.profile.current_procedure_step  %}
+            <button type="submit" class="col-1 btn btn-success" name='complete_step' style="color: white;font-size: larger;padding: 1px 6px;">✓</button>
+        {% endif %}
+        <br>
+    {% endfor %}
+
+{% endblock %}

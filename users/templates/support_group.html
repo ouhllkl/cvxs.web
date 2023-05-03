@@ -1,0 +1,62 @@
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    
+    <h1>{{ group }}</h1>
+    <p> {{ group.about }} </p>
+    
+    {% if user == group.admin %}
+        <br>
+        <a class="btn btn-primary" href="{% url 'view_join_requests' group_id=group_id %}"> View join requests ({{ join_requests_count }})</a><br>
+        
+    {% endif %}
+
+    {% if user == group.admin or user_in_group %}
+        <br>
+        <a class="btn btn-primary" href="{% url 'view_help_requests' group_id=group_id %}"> View help requests ({{ help_requests_count }})</a><br>
+    {% endif %}
+    <hr>
+    Admin:  <a href="{% url 'profile' user_id=group.admin.pk %}">{{ group.admin }}</a>  <br>
+    
+    <h5> Users: </h5> 
+    <div class="row">
+        {% for g_user in  group.supportgourpuser_set.all %} 
+            <a href="{% url 'profile' user_id=g_user.user.pk %}" style="margin: 10px;" class="btn btn-primary">{{ g_user.user }}</a>  <br> 
+        {% endfor %}
+    </div>
+
+    <hr>
+    <h2>Help request</h2>
+    <form method="post">
+        <input type="text"name="about"id="id_about" class="form-control" placeholder="About"><br>
+        <p>Message</p>
+        <textarea name="message" cols="40" rows="10" id="id_message" class="form-control" ></textarea>
+        <input type="hidden" name="user" value="{{ SupportGroupHelpRequest.user.value }}">
+        <input type="hidden" name="support_gourp" value="{{ SupportGroupHelpRequest.support_gourp.value }}">
+        
+        {% csrf_token %}
+        <input type="hidden" name="SupportGroupHelpRequest">
+        <br>
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+
+    {% if not user_in_group %}
+    <hr>
+    <h2>Join Request</h2>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="SupportGroupJoinRequest">
+
+        <input type="hidden" name="user" value="{{ SupportGroupHelpRequest.user.value }}">
+        <input type="hidden" name="support_gourp" value="{{ SupportGroupHelpRequest.support_gourp.value }}">
+        
+        <label for="id_message">Message:</label> 
+        <textarea  class="form-control" name="message"  rows="3" id="id_message"></textarea>
+        
+        <br>
+        <button type="submit" class="btn btn-primary">Send Join Request</button>
+    </form>
+    {% endif %}
+{% endblock %}

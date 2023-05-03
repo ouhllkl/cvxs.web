@@ -1,0 +1,12 @@
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    <img src="{% static 'images/access_denied.png' %}" style="width: 100%;" alt="">
+
+    <h1>{{ message_title }}</h1>
+    <h5 style="text-align: center;">{{ message_detail }}</h5>
+    
+
+{% endblock %}

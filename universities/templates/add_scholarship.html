@@ -1,0 +1,23 @@
+
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    <form method="post" >
+        {% csrf_token %}
+        <h1>Add scholarship</h1>
+        <p>University</p><h5>{{ university.name }}</h5> <input type="hidden" name="university" required id="id_university" value="{{ scholarship_form.university.value }}"><br>
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Name</span>
+            </div>
+            <input type="text" class="form-control" name="name" maxlength="100" required id="id_name">
+        </div>
+        
+        <p>About</p> <textarea name="about" class="form-control" rows="5" maxlength="100" required id="id_about"></textarea><br>
+        <p>Support contacts</p> <textarea class="form-control" name="support_contacts" rows="5" maxlength="100" required id="id_support_contacts"></textarea></p><br>
+
+        <button type="submit" class="btn btn-success">add</button>
+    </form>
+{% endblock %}

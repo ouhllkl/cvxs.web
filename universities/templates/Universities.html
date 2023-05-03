@@ -1,0 +1,22 @@
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    <img src="{% static 'images/university.png' %}" style="width: 100%;" alt="">
+    <h1>Universities</h1>
+    <br>    
+    {% if user.administration_profile.add_university %}
+        
+        <a href="{% url 'add_university' %}" class="btn btn-success">+</a>
+    {% endif %}
+    <br><br>
+    {% for uni in universities %}
+        <div class="list_item">
+            <h2>{{ uni.name }} </h2>
+            <p> {{ uni.city }}</p>
+            <br>
+            <a class="btn btn-dark" href="{% url 'view_university' university_id=uni.pk %}">Open</a>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1b2a41 !important;position: fixed; width: 100%;top: 0px;">
+    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/cvx.png' %}" style="width: 40px;" alt=""> CVX Students</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        {% if not user.is_anonymous %}    
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'view_universities' %}">Universities</a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'view_support_groups' %}">Groups </a>
+            </li>
+            
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'view_procedures' %}">Procedures</a>
+            </li>
+
+            
+        {% endif %}
+        
+        
+      </ul>
+    {% if user.is_anonymous %}
+        <li class="form-inline my-2 my-lg-0">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+        <li class="form-inline my-2 my-lg-0">
+            <a class="nav-link" href="{% url 'create_user_account' %}">Signup</a>
+        </li>
+    {% else %}
+        <li class="form-inline my-2 my-lg-0">
+            <a class="nav-link" href="{% url 'profile' user.pk %}">{{ user }}</a>
+        </li>
+    {% endif %}
+
+    </div>
+  </nav>
+
+  <br><br><br><br>

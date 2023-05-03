@@ -1,0 +1,34 @@
+
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    <img src="{% static 'images/login.png' %}" style="width: 50%; margin-left: 25%; margin-bottom: 40px;" alt="">
+    <form method="post">
+        <h1>Login</h1>
+        <br><br>
+        {% csrf_token %}
+        {{ form.errors }}
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Username</span>
+            </div>
+            <input type="text" name="username" maxlength="63" required id="id_username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Password</span>
+            </div>
+            <input type="password" name="password" maxlength="63" required id="id_password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg active" style="width: 100%;">Login</button>
+        
+    </form>    
+    <br><br>
+    <a href="{% url 'reset_password' %}">reset password</a><br>
+    <a href="{% url 'create_user_account' %}">Signup</a>
+{% endblock %}
+
+

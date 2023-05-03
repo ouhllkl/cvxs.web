@@ -1,0 +1,24 @@
+
+
+
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    <h1>group: <a href="{% url 'view_support_group' group_id=group.id %}">{{ group }}</a> </h1>
+    <h3>help requests ( {{ requests.count }} )</h3>
+    {% for j_request in requests|dictsortreversed:"pk" %}
+
+        <form method="post" class="list_item">
+            {% csrf_token %}
+            
+            <h2><a href="{% url 'profile' user_id=j_request.user.pk %}">{{ j_request.user }}</a></h2>
+            <p>{{ j_request.message|linebreaks }}</p><br>
+            <input type="hidden" name="request" value="{{ j_request.pk }}">
+            <button class="btn btn-success" type="submit" name="accept">accept</button>
+            <button class="btn btn-danger" type="submit" name="cancel">cancel</button>
+        </form>    
+    {% endfor %}
+      
+{% endblock %}

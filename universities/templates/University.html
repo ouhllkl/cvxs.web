@@ -1,0 +1,51 @@
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    {% if user.administration_profile.add_university %}
+        <div class="alert alert-warning alert-dismissible alert_message" id="confirm_form" style="display: none;">
+            <a href="#"  class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+            Are you sure you want to delete <strong> "{{ university.name }}" </strong>  data
+            <br><br>
+            <form method="post">
+                {% csrf_token %}
+                <button name="delete" class="btn btn-danger">confirm</button>
+            </form>
+            
+        </div>
+    {% endif %}
+
+    <h1>{{ university.name }}</h1>
+    <p>{{ university.city }}</p>
+    
+    <br>
+    <div class="row" style="padding: 20px;">
+        <a class="col-4 btn btn-secondary" href="{{ university.website  }}">University website</a><div class="col-12" style="height: 20px;"> </div>
+        <a class="col-4 btn btn-secondary" href="{{ university.programmes_page  }}">University programmes</a><div class="col-12" style="height: 20px;"> </div><br>
+        {% if user.administration_profile.add_university %}
+            <a class="col-2 btn btn-warning fas fa-edit" style="margin-right: 2px;" href="{% url 'edit_university' university.pk %}">Edit</a><br>
+            <button class="col-2 btn btn-danger fas fa-edit" onclick="document.getElementById('confirm_form').style.display = 'block'">Delete</button><div class="col-12" style="height: 20px;"> </div><br>
+        {% endif %}
+        
+    </div>
+    
+    <br>
+    <hr>
+    <h5>Scholarships</h5>
+    
+    <div class="row" style="padding: 20px;">
+        {% for scholarship in university.scholarship_set.all %}
+            
+            <a href="{% url 'view_scholarship' scholarship.pk %}" class="btn btn-secondary col-12" style="margin-bottom: 20px;">{{ scholarship }}</a>
+            
+        {% endfor %}
+    </div>  
+    <br>
+
+    {% if user.administration_profile.add_university %}
+        <a href="{% url 'add_scholarship' university_id=university.pk %}" class="btn btn-success">Add scholarship</a>
+    {% endif %}
+    
+{% endblock %}

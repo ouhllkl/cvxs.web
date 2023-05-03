@@ -1,0 +1,17 @@
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    <img src="{% static 'images/form.png' %}" style="width: 100%;" alt="">
+    <br><br>
+    <h1>Applications</h1>
+
+    {% for application in applications %}
+        <div class="list_item">
+            <h2>{{ application.user.first_name }} {{ application.user.last_name }} </h2>
+            <p>{{ application.branch_of_interest }}  ({{ application.branch_of_interest_degree_type }})</p>
+            <a class="btn btn-dark" href="{% url 'profile' user_id=application.user.pk %}">View profile</a>
+        </div>
+    {% endfor %}
+{% endblock %}

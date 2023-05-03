@@ -1,0 +1,30 @@
+
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    <h1> Add scholarship session</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <p>Scholarship</p> <h5>{{ session.scholarship.name }}</h5> <input type="hidden" name="scholarship" required id="id_scholarship" value="{{ session.scholarship.pk }}">
+        <br>
+
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Session</span>
+            </div>
+            <input class="form-control" type="text" name="session" maxlength="100" required id="id_session" placeholder="2023 - 2024" value="{{ session.session }}">
+        </div>
+
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Apply link</span>
+            </div>
+            <input class="form-control" type="url" name="apply_link" maxlength="200" required id="id_apply_link" value="{{ session.apply_link }}">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Edit</button>
+    </form>
+    {% endblock %}

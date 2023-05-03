@@ -1,0 +1,61 @@
+
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    {% if user.administration_profile.add_university %}
+        <div class="alert alert-warning alert-dismissible alert_message" id="confirm_form" style="display: none;">
+            <a href="#"  class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+            Are you sure you want to delete <strong> "{{ scholarship.name }}" </strong>  data
+            <br><br>
+            <form method="post">
+                {% csrf_token %}
+                <button name="delete" class="btn btn-danger">confirm</button>
+            </form>
+            
+        </div>
+    {% endif %}
+    <h1>{{ scholarship.name }}</h1>
+    <br><br>
+    
+    <form method="post" class="row" style="padding: 20px;">
+        {% csrf_token %}
+        <div  class="col-6"><a href="{% url 'view_university' scholarship.university.pk %}" style="color: aliceblue;" class="btn btn-info">@ {{ scholarship.university.name }}</a></div> 
+
+        {% if user.administration_profile.add_university %}
+            <a class="col-1 btn btn-warning" style="margin-right: 5px;" href="{% url 'edit_scholarship' scholarship.pk %}">Edit</a>
+            
+            <a class="col-2 btn btn-danger" style="margin-right: 5px;" onclick="document.getElementById('confirm_form').style.display = 'block'">Delete</a><br>
+        {% else %}
+            <div class="col-3"></div>
+        {% endif %}
+            
+        
+        {% if followed %}
+            <button type="submit" name="Follow" class="btn btn-secondary col-2">Followed</button>
+        {% else %}
+            <button type="submit" name="Follow" class="btn btn-primary col-2">Follow</button>
+        {% endif %}
+    </form>
+    <hr>
+    <p>{{ scholarship.about|linebreaks|urlize }}</p>
+    <br>
+    <h5>Support contacts</h5>
+    <p>{{ scholarship.support_contacts|linebreaks|urlize }}</p>
+    <br>
+    <h5>Sessions</h5>
+    {% for session in scholarship.scholarshipsession_set.all %}
+        {% if user.administration_profile.add_university %}
+            <a href="{% url 'edit_scholarship_session' session.pk %}">✏️</a>
+        {% endif %}
+        <a href="{{ session.apply_link }}">{{ session.session }}</a><br>
+        
+    {% endfor %}
+    <br>
+    {% if user.administration_profile.add_university %}
+        <a href="{% url 'add_scholarship_session' scholarship_id=scholarship.pk %}" class="btn btn-success">Add session</a>
+    {% endif %}
+
+{% endblock %}

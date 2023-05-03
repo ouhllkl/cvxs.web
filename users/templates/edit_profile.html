@@ -1,0 +1,43 @@
+{% extends "general_form.html" %}
+{% load static %}
+
+
+
+{% block in_form %}
+    <form method="post">
+        {% csrf_token %}
+        
+        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+        <p>@{{ user }}</p>
+        <br><br>
+
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Resedence</span>
+            </div>
+            <input type="text" name="resedence"  class="form-control" value="{{ profile.resedence }}" maxlength="100" required id="id_resedence">
+        </div>
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">CV</span>
+            </div>
+            <input type="url" name="cv"  class="form-control" value="{{ profile.cv }}" maxlength="200" id="id_cv">
+        </div>
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Phone numer</span>
+            </div>
+            <input type="text" name="phone_numer"  class="form-control" value="{{ profile.phone_numer }}" maxlength="100" id="id_phone_numer">
+        </div>
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text"  class="form-control" id="basic-addon1">Branch of interest</span>
+            </div>
+            <input type="text" name="branch_of_interest" class="form-control" value="{{ profile.branch_of_interest }}" placeholder="Field" maxlength="100" id="id_branch_of_interest">
+            {{ form.branch_of_interest_degree_type }}
+        </div>
+
+
+        <button type="submit" class="btn btn-success">Update</button>
+    </form>    
+{% endblock %}

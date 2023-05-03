@@ -1,0 +1,92 @@
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    <br>
+    <h2>{{ user_obj.first_name }} {{ user_obj.last_name }}</h2>
+    <p>@{{ user_obj }}</p>
+    <br>
+    {% if user_obj == user %}
+        <a class="btn btn-warning" href="{% url 'edit_profile' %}">Edit</a>
+    {% endif %}
+    <hr>
+    <p>Resedence </p><h5>{{ user_obj.profile.resedence }}</h5><br>
+    <p>Phone number</p><h5>{{ user_obj.profile.phone_numer }}</h5><br>
+    <p>Email</p><h5>{{ user_obj.email }}</h5><br>
+    <p>CV</p><h5><a href="{{ user_obj.profile.cv }}">File</a></h5><br>
+    
+    {% if administration_request == 1 or user_obj == user %}
+        <hr>
+        <p>Branch_of_interest</p><h5>{{ user_obj.profile.branch_of_interest }}</h5><br>
+        <p>Degree type</p><h5>{{ user_obj.profile.branch_of_interest_degree_type }}</h5><br>
+        
+        {% if cvx_acceptance_handler %}
+            <form method="post">
+                {% csrf_token %}
+                {% if user_obj.profile.cvx_acceptance == 0 %}
+                    <button class="btn btn-success" type="submit" name="accept">Accept</button>
+                    <button class="btn btn-danger" type="submit" name="declines">Declines</button>
+                {% else %}
+                    <button class="btn btn-warning" type="submit" name="reviewing">Set as reviewing in process</button>
+                {% endif %}
+            </form>
+            
+            
+        {% endif %}
+        
+        {% if change_procedures_handler %}
+                <hr>
+            <form method="post">
+                {% csrf_token %}
+                {{ procedures_form }}
+                <button name="change_procedures" class="btn btn-primary" type="submit">Set</button>
+            </form>
+        {% endif %}
+        <br>
+        
+        {% if user_obj == user %}
+            
+            <hr>
+            {% if user_obj.profile.current_procedure != none %}
+                <p>My current procedure </p><h5><a href="{% url 'view_procedure' user_obj.profile.current_procedure.pk %}">{{ user_obj.profile.current_procedure }}</a></h5>
+            {% endif %}            
+            {% if user_obj.profile.current_procedure_step in user_procedure_steps %}
+                In progress
+            
+                
+            {% elif user_obj.profile.current_procedure and not user_obj.profile.current_procedure_completed %}
+                
+                <form method="post">
+                    <br>
+                    {% csrf_token %}
+                    <input type="hidden" name="current_procedure_step" value="{{ user_procedure_steps.0.pk }}">
+                    <button name="start_procedure" class="btn btn-success" type="submit">start procedure</button>
+                </form>
+            {% endif %}
+
+
+            <form method="post">
+                <h5>Steps</h5>
+                {% csrf_token %}
+                
+                {% for step in user_procedure_steps %}
+
+                    {% if step == user_obj.profile.current_procedure_step  %}
+                        <input type="hidden" name="current_step" value="{{ step.pk }}">
+                    {% endif %}
+                    
+                    
+                    <button type="button" onclick="location.href='{% url 'view_step' step.pk %}'" style="margin-bottom: 10px;margin-top: 10px;" class="col-7 btn btn-{% if step.c_status == 1 or user_obj.profile.current_procedure_completed %}success{% elif step.c_status == 0 %}warning{% else %}dark{% endif %}">{{ step.step }}</button>
+                    {% if step == user_obj.profile.current_procedure_step  %}
+                        <button type="submit" class="col-1 btn btn-success" name='complete_step' style="color: white;font-size: larger;padding: 1px 6px;">✓</button>
+                    {% endif %}
+                    <br>
+                {% endfor %}
+            </form>
+            
+        {% endif %}
+        
+    {% endif %}
+
+{% endblock %}

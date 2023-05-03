@@ -1,0 +1,42 @@
+
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    <img src="{% static 'images/university.png' %}" style="width: 100%;" alt="">
+    <h1>Add University</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+        
+        
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Name</span>
+            </div>
+            <input type="text" name="name" class="form-control" maxlength="100" required id="id_name" placeholder="University name">
+        </div>
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">City</span>
+            </div>
+            <input type="text" name="city" class="form-control" maxlength="100" required id="id_city" placeholder="University location">
+        </div>
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Website</span>
+            </div>
+            <input type="url" name="website" class="form-control" maxlength="200" required id="id_website" placeholder="Main page link">
+        </div>
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Programmes page</span>
+            </div>
+            <input type="url" name="programmes_page" class="form-control" maxlength="200" required id="id_programmes_page" placeholder="Listed programmes page link">
+        </div>
+
+        
+        <button type="submit" class="btn btn-success">add</button>
+    </form>
+{% endblock %}

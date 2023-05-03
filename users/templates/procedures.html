@@ -1,0 +1,17 @@
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    
+    <h1>Procedures</h1>
+    <br>
+
+    {% for procedure in procedures %}
+        <br>
+        <div class="list_item" onclick="location.href='{% url 'view_procedure' procedure.pk %}'">
+            <h5>{{ procedure }} </h5>
+        </div>
+    
+    {% endfor %}
+{% endblock %}

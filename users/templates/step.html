@@ -1,0 +1,15 @@
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+    <h1>{{ step.name }}</h1>
+    <hr>
+    <h5>Requirements </h5><p>{{ step.requirements|linebreaks|urlize }}</p><br>
+    <hr>
+    <h5>Notes </p><p>{{ step.notes|linebreaks|urlize }}</p><br>
+    <h5>Support gourp </h5><a class="btn btn-primary" href="{% url 'view_support_group' step.support_gourp.pk %}">{{ step.support_gourp }}</a><br>
+    <hr>
+    <h5>Help contacts </h5><p>{{ step.help_contacts|linebreaks|urlize }}</p><br>
+
+{% endblock %}

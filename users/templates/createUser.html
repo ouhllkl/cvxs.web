@@ -1,0 +1,76 @@
+
+{% extends "general_form.html" %}
+{% load static %}
+
+
+
+{% block in_form %}
+    <img src="{% static 'images/login.png' %}" style="width: 50%; margin-left: 25%; margin-bottom: 40px;" alt="">
+    <form method="post">
+        <h1>Signup</h1>
+        <br><br>
+        {% csrf_token %}
+        
+        {% if messages %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ messages }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
+
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">First name</span>
+            </div>
+            <input type="text" name="first_name" maxlength="63" required id="id_first_name" class="form-control" placeholder="First name" aria-label="First name" aria-describedby="basic-addon1" value="{{ form.first_name.value }}">
+        </div>
+
+
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Last name</span>
+            </div>
+            <input type="text" name="last_name" maxlength="63" required id="id_last_name" class="form-control" placeholder="Last name" aria-label="Last name" aria-describedby="basic-addon1" value="{{ form.last_name.value }}">
+        </div>
+
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Email address</span>
+            </div>
+            <input type="email" name="email" maxlength="63" required id="id_email" class="form-control" placeholder="email" aria-label="email" aria-describedby="basic-addon1" value="{{ form.email.value }}">
+
+        </div>
+
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Username</span>
+            </div>
+            <input type="text" name="username" maxlength="63" required id="id_username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"  value="{{ form.username.value }}">
+            <div class="invalid-feedback">
+                {{ form.fields.username.error_messages.required }}
+            </div>
+        </div>
+
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Password</span>
+            </div>
+            <input type="password" name="password1" maxlength="63" required id="id_password1" class="form-control"  aria-label="password1" aria-describedby="basic-addon1">
+        </div>
+
+        <div  class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Password confirmation</span>
+            </div>
+            <input type="password" name="password2" maxlength="63" required id="id_password2" class="form-control"  aria-label="password2" aria-describedby="basic-addon1">
+        </div>
+
+        
+        <button type="submit" class="btn btn-primary btn-lg active" style="width: 100%;">Signup</button>
+        
+    </form>
+    <br>
+    <a href="{% url 'login' %}">login</a>
+{% endblock %}

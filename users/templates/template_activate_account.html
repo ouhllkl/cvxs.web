@@ -1,0 +1,10 @@
+
+Dear {{ user.username }},
+
+Thank you for registering for CVX Students! Before you can start using our platform, we need to confirm your email address. Please click on the link below to confirm your email address:
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+If you did not register for our service, please ignore this email.
+
+Thank you.

@@ -1,0 +1,21 @@
+{% extends "general_form.html" %}
+{% load static %}
+
+
+{% block in_form %}
+      <h1>CVX Students</h1>
+      <img src="{% static 'images/vec_1.png' %}" style="width: 100%;" alt="">
+      <p>Unlock Your Academic Potential: Find Scholarships in Italy with CVX Students!</p>
+      
+      
+         {% if user.is_anonymous %}
+            <button onclick="location.href='{% url 'login' %}'" class="btn btn-primary btn-lg active" style="width: 100%;">Login</button><br><br>
+            <button onclick="location.href='{% url 'create_user_account' %}'"  class="btn btn-primary btn-lg active" style="width: 100%;">Signup</button><br><br>
+            <button class="btn btn-light btn-lg active" style="width: 100%;"><img src="{% static 'images/google_icon.png' %}" style="width: 30px;" alt=""> Continue With Google</button>                 
+         {% else %}
+         <button onclick="location.href='{% url 'view_universities' %}'" class="btn btn-primary btn-lg active" style="width: 100%;">Universities</button><br><br>
+         <button onclick="location.href='{% url 'view_support_groups' %}'" class="btn btn-primary btn-lg active" style="width: 100%;"> Groups</button>                 
+         {% endif %}
+
+      
+{% endblock %}
