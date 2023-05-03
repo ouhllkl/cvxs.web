@@ -8,10 +8,14 @@ import os
 from .tokens import account_activation_token
 from django.contrib import messages
 from django.utils.html import strip_tags
-
+from threading import Thread
 
 def notify_user(request, user, title, message = '', redirect_link = '', html_template = '', html_kwargs = {}):
+    th = Thread(target= notifier_thread,args=(request, user, title, html_template, html_kwargs))
+    th.start()
 
+
+def notifier_thread(request, user, title, html_template = '', html_kwargs = {}):
     html = render_to_string( os.path.join('emails', html_template+'.html'), {
         'user': user.username,
         'domain': get_current_site(request).domain,
