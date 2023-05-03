@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'universities'
+    'allauth',
+    'allauth.account',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +148,23 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'cvx.students.notifier@gmail.com'  
 EMAIL_HOST_PASSWORD = 'idghyaljbebssjgq'  
 EMAIL_PORT = 587  
+
+
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
