@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'universities',
     'allauth',
     'allauth.account',
+
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -149,9 +151,10 @@ EMAIL_HOST_USER = 'cvx.students.notifier@gmail.com'
 EMAIL_HOST_PASSWORD = 'idghyaljbebssjgq'  
 EMAIL_PORT = 587  
 
-
-AUTHENTICATION_BACKENDS = [    'django.contrib.auth.backends.ModelBackend',    'allauth.account.auth_backends.AuthenticationBackend',]
-
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.google.GoogleOAuth2', # <-- Add this line
+]
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
