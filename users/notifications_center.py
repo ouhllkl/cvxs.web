@@ -18,7 +18,7 @@ def notify_user(request, user, title, message = '', redirect_link = '', html_tem
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
         'protocol': 'https' if request.is_secure() else 'http'
-    }|html_kwargs )
+    }.update(html_kwargs))
 
 
     text_content = strip_tags(html)
