@@ -23,10 +23,10 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
 
-    path('<int:user_id>/', profile, name='profile'),
+    path('profile/<int:user_id>/', profile, name='profile'),
     path('login/',                 login_page, name= 'login'),
     path('create/',                 create_user, name= 'create_user_account'),
-    path('edit_profile/',                 edit_profile, name= 'edit_profile'),
+    path('profile/',                 edit_profile, name= 'edit_profile'),
 
 
     
