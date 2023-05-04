@@ -19,6 +19,8 @@ from .views import *
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
+
 
 
 urlpatterns = [
@@ -27,6 +29,8 @@ urlpatterns = [
     path('login/',                 login_page, name= 'login'),
     path('create/',                 create_user, name= 'create_user_account'),
     path('profile/',                 edit_profile, name= 'edit_profile'),
+    path('logout/', LogoutView.as_view(template_name='logout.html'), name='logout'),
+
 
 
     
