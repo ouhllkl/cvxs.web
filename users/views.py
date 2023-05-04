@@ -432,20 +432,3 @@ def adminstration_dashboard(request):
 
     return render(request, 'adminstration_dashboard.html')
 
-
-
-from allauth.account.adapter import DefaultAccountAdapter
-
-class CustomSocialAccountAdapter(DefaultAccountAdapter):
-    def pre_social_login(self, request, sociallogin):
-        """
-        Invoked just after a user successfully authenticates via a
-        social provider, but before the login is actually processed.
-        """
-        user = sociallogin.user
-        if user.email:
-            # Check if the email address already exists in the User model
-            existing_user = User.objects.filter(email=user.email).first()
-            if existing_user:
-                # If the email address is already in use, connect the social account to the existing user account
-                sociallogin.connect(request, existing_user)
