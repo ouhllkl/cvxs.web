@@ -426,9 +426,9 @@ def view_step(request, step_id):
 
 
 
-def adminstration_dashboard(request):
+def administration_dashboard(request):
     if not len(administration_profile.objects.filter(user = request.user)):
         return render(request, 'access_denied.html', {'message_title':'Access Denied', 'message_detail': "you can't view this page, because you are not in the cvx administration"})
 
-    return render(request, 'adminstration_dashboard.html')
+    return render(request, 'administration_dashboard.html')
 

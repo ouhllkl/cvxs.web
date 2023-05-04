@@ -58,7 +58,7 @@ urlpatterns = [
     path('join_requests/<int:group_id>/', view_join_requests, name='view_join_requests'),
     path('help_requests/<int:group_id>/', view_help_requests, name='view_help_requests'),
 
-
+    path('administration_dashboard/', administration_dashboard, name='administration_dashboard'),
     
     
 

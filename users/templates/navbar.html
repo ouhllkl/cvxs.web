@@ -19,7 +19,12 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'view_procedures' %}">Procedures</a>
             </li>
-
+            {% if user.administration_profile %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'administration_dashboard' %}">Administration Dashboard</a>
+                </li>
+            {% endif %}
+            
             
         {% endif %}
         
@@ -42,3 +47,4 @@
   </nav>
 
   <br><br><br><br>
+  
